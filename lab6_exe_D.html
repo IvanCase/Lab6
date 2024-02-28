@@ -47,12 +47,40 @@ Description : API Usage.
     <script>
         // Function to fetch and display students
         async function fetchStudents() {
-            
+            const response = await fetch("https://65df9106ff5e305f32a2895b.mockapi.io/students");
+            const students = await response.json(); 
+            const studentList = document.getElementById('studentList');
+            studentList.innerHTML = '';
+
+
+            students.forEach(student => {
+                const studentItem = document.createElement('li');
+                studentItem.innerText = student.name;
+                studentItem.onclick = () => fetchCourses(student.id);
+                studentList.appendChild(studentItem);
+            });
+
         }
+
+        
 
         // Function to fetch and display courses for a student
         async function fetchCourses(studentId) {
-            
+            const response = await fetch(`https://65df9106ff5e305f32a2895b.mockapi.io/students/${studentId}/courses`);
+            const courses = await response.json();
+            const courseList = document.getElementById('courseList');
+            courseList.innerHTML = '';
+        
+            courses.forEach(course => {2
+                const courseItem = document.createElement('li');
+                courseItem.innerText = `${course.name} (Unit: ${course.unit})`;
+                courseList.appendChild(courseItem);
+
+
+        })
+
+        
+
         }
 
         // Fetch students on window load
